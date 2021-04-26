@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Card,
@@ -7,13 +7,13 @@ import {
   Image,
   ListGroup,
   Row,
-} from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import Rating from "../components/Rating";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import { listProductsDetails } from "../redux/action/productAction";
+} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import Rating from '../components/Rating';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
+import { listProductsDetails } from '../redux/action/productAction';
 
 function ProductScreen({ history, match }) {
   const [qty, setQty] = useState(1);
@@ -28,25 +28,25 @@ function ProductScreen({ history, match }) {
   }, [dispatch, match]);
 
   const addToCartHandeler = () => {
-    history.push(`/cart/${match.params.id}?qty=${qty}`)
-  }
+    history.push(`/cart/${match.params.id}?qty=${qty}`);
+  };
 
   return (
     <>
-      <Link className="btn btn-light my-3" to="/">
+      <Link className='btn btn-light my-3' to='/'>
         Go Back
       </Link>
       {loading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">{error}</Message>
+        <Message variant='danger'>{error}</Message>
       ) : (
         <Row>
           <Col md={6}>
             <Image src={product.image} alt={product.name} fluid />
           </Col>
           <Col md={3}>
-            <ListGroup variant="flush">
+            <ListGroup variant='flush'>
               <ListGroup.Item>
                 <h3>{product.name}</h3>
               </ListGroup.Item>
@@ -65,7 +65,7 @@ function ProductScreen({ history, match }) {
 
           <Col md={3}>
             <Card>
-              <ListGroup variant="flush">
+              <ListGroup variant='flush'>
                 <ListGroup.Item>
                   <Row>
                     <Col>Price:</Col>
@@ -78,7 +78,7 @@ function ProductScreen({ history, match }) {
                   <Row>
                     <Col>Stock:</Col>
                     <Col>
-                      {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
+                      {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
                     </Col>
                   </Row>
                 </ListGroup.Item>
@@ -88,7 +88,7 @@ function ProductScreen({ history, match }) {
                       <Col>Qty</Col>
                       <Col>
                         <Form.Control
-                          as="select"
+                          as='select'
                           value={qty}
                           onChange={(e) => setQty(e.target.value)}
                         >
@@ -104,8 +104,8 @@ function ProductScreen({ history, match }) {
                 )}
                 <ListGroup.Item>
                   <Button
-                    className="btn-block"
-                    type="button"
+                    className='btn-block'
+                    type='button'
                     disabled={product.countInStock === 0}
                     onClick={addToCartHandeler}
                   >
