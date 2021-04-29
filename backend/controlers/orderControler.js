@@ -1,5 +1,5 @@
-import Order from "../models/orderModel.js";
-import asynchandeler from "express-async-handler";
+import Order from '../models/orderModel.js';
+import asynchandeler from 'express-async-handler';
 
 const addOrderItem = asynchandeler(async (req, res) => {
   const {
@@ -13,7 +13,7 @@ const addOrderItem = asynchandeler(async (req, res) => {
   } = req.body;
   if (orderItems && orderItems.length === 0) {
     res.status(400);
-    throw new Error("no order items");
+    throw new Error('no order items');
     return;
   } else {
     const order = new Order({
@@ -34,22 +34,22 @@ const addOrderItem = asynchandeler(async (req, res) => {
 
 const getOrderById = asynchandeler(async (req, res) => {
   const order = await Order.findById(req.params.id).populate(
-    "user",
-    "name email"
+    'user',
+    'name email'
   );
 
   if (order) {
     res.json(order);
   } else {
     res.status(404);
-    throw new Error("user not found");
+    throw new Error('user not found');
   }
 });
 
 const updateOrderToPaid = asynchandeler(async (req, res) => {
   const order = await (await Order.findById(req.params.id)).populate(
-    "user",
-    "name email"
+    'user',
+    'name email'
   );
 
   if (order) {
@@ -65,7 +65,7 @@ const updateOrderToPaid = asynchandeler(async (req, res) => {
     res.json(updatedOrder);
   } else {
     res.status(404);
-    throw new Error("user not found");
+    throw new Error('user not found');
   }
 });
 
@@ -74,4 +74,15 @@ const getMyOrders = asynchandeler(async (req, res) => {
   res.json(orders);
 });
 
-export { addOrderItem, getOrderById, updateOrderToPaid, getMyOrders };
+const getOrders = asynchandeler(async (req, res) => {
+  const orders = await Order.find({}).populate('user', 'id name');
+  res.json(orders);
+});
+
+export {
+  addOrderItem,
+  getOrderById,
+  updateOrderToPaid,
+  getMyOrders,
+  getOrders,
+};

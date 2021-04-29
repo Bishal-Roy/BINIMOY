@@ -1,25 +1,32 @@
-import express from "express";
-import dotenv from "dotenv";
-import connectDB from "./config/db.js";
-import productRouters from "./routes/productRouters.js";
-import userRoutes from "./routes/userRoutes.js";
-import orderRoutes from "./routes/orderRoutes.js";
-import { errorHandener, notFound } from "./middleware/errorMiddleware.js";
+import express from 'express';
+import path from 'path';
+import dotenv from 'dotenv';
+import connectDB from './config/db.js';
+import productRouters from './routes/productRouters.js';
+import userRoutes from './routes/userRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
+import uploadRoutes from './routes/uploadRoutes.js';
+import { errorHandener, notFound } from './middleware/errorMiddleware.js';
 
 dotenv.config();
 
 connectDB();
 
 const app = express();
-app.use(express.json())
+app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("api id running....");
+app.get('/', (req, res) => {
+  res.send('api id running....');
 });
 
-app.use("/api/products", productRouters);
-app.use("/api/users", userRoutes);
-app.use("/api/orders", orderRoutes);
+app.use('/api/products', productRouters);
+app.use('/api/users', userRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/upload', uploadRoutes);
+
+
+const __dirname = path.resolve()
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
 app.use(notFound);
 
