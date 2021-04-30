@@ -21,9 +21,9 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('api id running....');
-});
+// app.get('/', (req, res) => {
+//   res.send('api id running....');
+// });
 
 app.use('/api/products', productRouters);
 app.use('/api/users', userRoutes);
