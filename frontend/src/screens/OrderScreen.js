@@ -1,22 +1,21 @@
-import React, { useEffect } from "react";
-import { Col, ListGroup, Row, Image, Card } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import Loader from "../components/Loader";
-import Message from "../components/Message";
-import { Link } from "react-router-dom";
-import { getOrderDetails } from "../redux/action/orderAction";
+import React, { useEffect } from 'react';
+import { Col, ListGroup, Row, Image, Card } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
+import { Link } from 'react-router-dom';
+import { getOrderDetails } from '../redux/action/orderAction';
 
 function OrderScreen({ match }) {
   const orderId = match.params.id;
   const dispatch = useDispatch();
 
-  const orderDetails = useSelector((state) => state.orderCreate);
+  const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
   if (!loading) {
     const addDecimals = (num) => {
       return (Math.round(num * 100) / 100).toFixed(2);
     };
-
     order.itemsPrice = addDecimals(
       order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
     );
@@ -29,7 +28,7 @@ function OrderScreen({ match }) {
   return loading ? (
     <Loader />
   ) : error ? (
-    <Message variant="danger">{error}</Message>
+    <Message variant='danger'>{error}</Message>
   ) : (
     <>
       <h1>Order {order._id}</h1>
@@ -40,16 +39,15 @@ function OrderScreen({ match }) {
             <p>
               <strong>Address</strong>
               {order.shippingAddress.address}, {order.shippingAddress.city}{' '}
-              {order.shippingAddress.postalCode},{" "}
+              {order.shippingAddress.postalCode},{' '}
               {order.shippingAddress.country}
             </p>
             {order.isDelivered ? (
-              <Message variant="success">Delivered on {order.paidAt}</Message>
+              <Message variant='success'>Delivered on {order.paidAt}</Message>
             ) : (
-              <Message variant="danger">Not Delivered</Message>
+              <Message variant='danger'>Not Delivered</Message>
             )}
           </ListGroup.Item>
-          
 
           <ListGroup.Item>
             <h2>Payment Method</h2>
@@ -58,9 +56,9 @@ function OrderScreen({ match }) {
               {order.paymentMethod}
             </p>
             {order.isPaid ? (
-              <Message variant="success">Paid on {order.paidAt}</Message>
+              <Message variant='success'>Paid on {order.paidAt}</Message>
             ) : (
-              <Message variant="danger">Not Paid</Message>
+              <Message variant='danger'>Not Paid</Message>
             )}
           </ListGroup.Item>
 
@@ -69,7 +67,7 @@ function OrderScreen({ match }) {
             {order.orderItems.length === 0 ? (
               <Message>order is empty</Message>
             ) : (
-              <ListGroup variant="flush">
+              <ListGroup variant='flush'>
                 {order.orderItems.map((item, index) => (
                   <ListGroup.Item key={index}>
                     <Row>
@@ -91,7 +89,7 @@ function OrderScreen({ match }) {
         </Col>
         <Col md={4}>
           <Card>
-            <ListGroup variant="flush">
+            <ListGroup variant='flush'>
               <ListGroup.Item>
                 <h2>Order summary</h2>
               </ListGroup.Item>
